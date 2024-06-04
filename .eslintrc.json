@@ -1,3 +1,25 @@
 {
-  "extends": "next/core-web-vitals"
+  "plugins": ["@typescript-eslint"],  
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-uses-react": 0,
+    "lodash/prefer-constant": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "no-extra-boolean-cast": 0,
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-unused-vars": ["warn",
+      { 
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
+  }
 }
