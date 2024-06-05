@@ -1,3 +1,5 @@
+"use client";
+
 import { Label as LabelComponent } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { createContext } from "@/utils/context";

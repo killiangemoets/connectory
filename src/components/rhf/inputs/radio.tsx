@@ -4,9 +4,9 @@ import { FormField } from "@/components/rhf/form-field";
 import type { RHFInputProps } from "@/types/inputs";
 import { useFormContext } from "react-hook-form";
 
-type RHFChecboxProps<T extends string> = RHFInputProps & Omit<RadioInputProps<T>, "value" | "onChange">;
+type RHFRadioInputProps<T extends string> = RHFInputProps & Omit<RadioInputProps<T>, "value" | "onChange">;
 
-export const RHFTextInput = <T extends string>({
+export const RHFRadioInput = <T extends string>({
   name,
   label,
   description,
@@ -14,7 +14,7 @@ export const RHFTextInput = <T extends string>({
   required,
   rules = {},
   ...props
-}: RHFChecboxProps<T>) => {
+}: RHFRadioInputProps<T>) => {
   const { control } = useFormContext();
   return (
     <FormField.Root
@@ -25,7 +25,7 @@ export const RHFTextInput = <T extends string>({
         <FormField.Item>
           {!!label && <FormField.Label>{label}</FormField.Label>}
           <FormField.Control>
-            <RadioInput {...props} {...field} />
+            <RadioInput {...props} value={field.value} onValueChange={field.onChange} />
           </FormField.Control>
           {!!description && <FormField.Description>{description}</FormField.Description>}
           <FormField.Message>{message}</FormField.Message>

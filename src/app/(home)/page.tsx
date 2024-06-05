@@ -7,12 +7,12 @@ import type { GetEntitiesQuery } from "@/utils/gql/graphql";
 import { useQuery } from "@apollo/client";
 
 export default function Home() {
-  const { loading, error, data } = useQuery<GetEntitiesQuery>(GET_ENTITIES);
+  const { loading, error, data: getEntitiesQuery } = useQuery<GetEntitiesQuery>(GET_ENTITIES);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  const entities = data?.getEntities;
+  const entities = getEntitiesQuery?.getEntities;
   if (!entities || entities?.length === 0) return <p>No data</p>;
 
   // console.log(entities);
