@@ -1,17 +1,18 @@
-import { Typography } from "./typography";
 import { cn } from "@/lib/utils";
 
 export const Navbar = ({ className }: { className?: string }) => {
   return (
-    <div className={cn("flex items-center gap-16 bg-blue-200 w-full h-16 px-4 ", className)}>
-      <Typography.h4>Connectory</Typography.h4>
+    <div className={cn("flex items-center gap-16 bg-primary w-full h-16 px-4 ", className)}>
+      <h4 className="text-heading-4 text-secondary italic tracking-wide">Connectory</h4>
     </div>
   );
 };
 
-export const Layout = ({ children, className, ...props }: React.ComponentPropsWithoutRef<"div">) => (
-  <div className={cn("", className)} {...props}>
-    <Navbar />
-    <main className="h-full relative px-20">{children}</main>
-  </div>
-);
+export const Layout = {
+  Body: ({ children, className, ...props }: React.ComponentPropsWithoutRef<"body">) => (
+    <body className={cn("min-h-screen bg-primary/10", className)} {...props}>
+      <Navbar />
+      <main className="h-full px-20 py-16">{children}</main>
+    </body>
+  ),
+};
