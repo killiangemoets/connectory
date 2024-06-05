@@ -1,5 +1,6 @@
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 // Theme
+import type { ColDef, GridOptions } from "@ag-grid-community/core";
 import { ModuleRegistry } from "@ag-grid-community/core";
 import { AgGridReact } from "@ag-grid-community/react";
 // React Grid Logic
@@ -11,7 +12,17 @@ import React from "react";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 // Create new GridExample component
-export const AgGrid = ({ data, columns }: { data: any; columns: any }) => {
+export const AgGrid = <
+  T extends {
+    [key: string]: any;
+  }
+>({
+  data,
+  columns,
+}: {
+  data: GridOptions<T>["rowData"];
+  columns: ColDef<T>[];
+}) => {
   const defaultColDef = {
     flex: 1,
   };
