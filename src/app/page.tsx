@@ -16,10 +16,11 @@ export default function Home() {
   const entities = data?.getEntities;
   if (!entities || entities?.length === 0) return <p>No data</p>;
 
+  // console.log(entities);
   // const columns = Object.keys(entities[0]).map((key) => ({ field: key }));
+
   const columns = [
-    { field: "__typename" },
-    { field: "id" },
+    { field: "__typename", headerName: "Type" },
     { field: "name" },
     { field: "industry" },
     { field: "phone" },
