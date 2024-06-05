@@ -33,10 +33,10 @@ export default function Create() {
     },
   });
 
-  function onSubmit(values: CreateEntityData) {
+  function onSubmit(data: CreateEntityData) {
     mutateFunction({
       variables: {
-        input: values,
+        input: data,
       },
     });
   }
@@ -58,7 +58,7 @@ export default function Create() {
 
   return (
     <div className="flex justify-center">
-      <Form className="space-y-8 w-full max-w-96" methods={methods} onSubmit={onSubmit}>
+      <Form className="flex flex-col gap-6 w-full max-w-96" methods={methods} onSubmit={onSubmit}>
         <RHFRadioInput
           className="flex space-x-4"
           required
@@ -88,10 +88,10 @@ export default function Create() {
             <RHFTextInput required name="industry" label="Industy" placeholder="Enter your industry" />
           </>
         )}
-        <Button disabled={loading} type="submit">
+        <Button disabled={loading} type="submit" className="mt-6">
           Submit
         </Button>
-        {!!error && <Typography.note>{error.message}</Typography.note>}
+        {!!error && <Typography.error className="text-center">Something went wrong, please try again!</Typography.error>}
       </Form>
     </div>
   );

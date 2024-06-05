@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { error } from "console";
 import React from "react";
 
 export const Typography = {
@@ -34,6 +35,11 @@ export const Typography = {
   ),
   note: ({ className, children, ...props }: React.ComponentPropsWithoutRef<"p">) => (
     <p className={cn("text-sm font-semibold", className)} {...props}>
+      {children}
+    </p>
+  ),
+  error: ({ className, children, ...props }: React.ComponentPropsWithoutRef<"p">) => (
+    <p className={cn("text-sm text-destructive font-semibold", className)} {...props}>
       {children}
     </p>
   ),
