@@ -1,18 +1,18 @@
-// import { gql } from "apollo-server";
+import { gql } from "@apollo/client";
 
-// export const GET_ENTITIES = gql`
-//   query GetEntities {
-//     getEntities {
-//       id
-//       name
-//       ... on Contact {
-//         email
-//         phone
-//       }
-//       ... on Company {
-//         industry
-//         contactEmail
-//       }
-//     }
-//   }
-// `;
+export const GET_ENTITIES = gql`
+  query GetEntities {
+    getEntities {
+      id
+      name
+      ... on Contact {
+        email
+        phone
+      }
+      ... on Company {
+        industry
+        contactEmail
+      }
+    }
+  }
+`;

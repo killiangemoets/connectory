@@ -10,7 +10,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
     "typecheck": "tsc --noEmit",
-    "start:mock-server": "node graphql-server/index.mjs"
+    "start:mock-server": "node graphql-server/index.mjs",
+    "graphql:generate": "graphql-codegen"
   },
   "husky": {
     "hooks": {
@@ -44,11 +45,10 @@
     "@ag-grid-enterprise/status-bar": "^31.3.2",
     "@ag-grid-enterprise/viewport-row-model": "^31.3.2",
     "@apollo/client": "^3.10.4",
-    "@graphql-codegen/cli": "^5.0.2",
-    "@graphql-codegen/typescript": "^4.0.7",
-    "@graphql-codegen/typescript-operations": "^4.2.1",
-    "@graphql-codegen/typescript-resolvers": "^4.1.0",
+    "@graphql-tools/mock": "^9.0.3",
+    "@graphql-tools/schema": "^10.0.4",
     "@radix-ui/react-slot": "^1.0.2",
+    "apollo-server": "^3.13.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "graphql": "^16.8.1",
@@ -63,6 +63,10 @@
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.7",
+    "@graphql-codegen/typescript-operations": "^4.2.1",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^20",
     "@types/react": "^18",

@@ -1,3 +1,5 @@
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -5,6 +7,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -90,3 +93,53 @@ export type GetEntitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetEntitiesQuery = { __typename?: 'Query', getEntities?: Array<{ __typename?: 'Company', industry: string, contactEmail?: string | null, id: string, name: string } | { __typename?: 'Contact', email: string, phone?: string | null, id: string, name: string } | null> | null };
+
+
+export const GetEntitiesDocument = gql`
+    query GetEntities {
+  getEntities {
+    id
+    name
+    ... on Contact {
+      email
+      phone
+    }
+    ... on Company {
+      industry
+      contactEmail
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetEntitiesQuery__
+ *
+ * To run a query within a React component, call `useGetEntitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEntitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEntitiesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetEntitiesQuery(baseOptions?: Apollo.QueryHookOptions<GetEntitiesQuery, GetEntitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEntitiesQuery, GetEntitiesQueryVariables>(GetEntitiesDocument, options);
+      }
+export function useGetEntitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEntitiesQuery, GetEntitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEntitiesQuery, GetEntitiesQueryVariables>(GetEntitiesDocument, options);
+        }
+export function useGetEntitiesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetEntitiesQuery, GetEntitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetEntitiesQuery, GetEntitiesQueryVariables>(GetEntitiesDocument, options);
+        }
+export type GetEntitiesQueryHookResult = ReturnType<typeof useGetEntitiesQuery>;
+export type GetEntitiesLazyQueryHookResult = ReturnType<typeof useGetEntitiesLazyQuery>;
+export type GetEntitiesSuspenseQueryHookResult = ReturnType<typeof useGetEntitiesSuspenseQuery>;
+export type GetEntitiesQueryResult = Apollo.QueryResult<GetEntitiesQuery, GetEntitiesQueryVariables>;

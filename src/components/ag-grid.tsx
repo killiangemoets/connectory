@@ -12,17 +12,7 @@ import React from "react";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 // Create new GridExample component
-export const AgGrid = <
-  T extends {
-    [key: string]: any;
-  }
->({
-  data,
-  columns,
-}: {
-  data: GridOptions<T>["rowData"];
-  columns: ColDef<T>[];
-}) => {
+export const AgGrid = ({ data, columns }: { data: GridOptions["rowData"]; columns: ColDef[] }) => {
   const defaultColDef = {
     flex: 1,
   };
