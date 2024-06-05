@@ -7,7 +7,6 @@ const typeDefs = readFileSync("./graphql-server/schema.graphql", "utf8");
 
 const schema = makeExecutableSchema({ typeDefs });
 
-// Définir des mocks personnalisés
 const mocks = {
   Query: () => ({
     getEntities: () => [
@@ -27,17 +26,24 @@ const mocks = {
       },
       {
         __typename: "Contact",
-        id: "c7bd4646-edfb-4010-addd-185424632508",
+        id: "c7bd4646-edfb-4010-addd-185424632502",
         name: "Killian Gemoets",
         email: "killian@example.com",
         phone: "+32123456",
       },
       {
         __typename: "Company",
-        id: "3b6b2772-3146-4592-8526-8d4f0e2a92db",
+        id: "3b6b2772-3146-4592-8526-8d4f0e2a92dc",
         name: "Faceook",
         industry: "Social Media",
         contactEmail: "info@facebook.com",
+      },
+      {
+        __typename: "Company",
+        id: "3b6b2772-3146-4592-8526-8d4f0e2a92dz",
+        name: "Twitter",
+        industry: "Social Media",
+        contactEmail: "info@twitter.com",
       },
     ],
   }),

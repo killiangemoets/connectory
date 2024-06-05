@@ -11,5 +11,5 @@ export default function CreateLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Layout.Content title="Create">{children}</Layout.Content>;
+  return <Layout.Content title="New connection">{children}</Layout.Content>;
 }
