@@ -17,7 +17,7 @@ export const Layout = {
     </body>
   ),
   Content: ({ children, className, title, ...props }: { title: string } & React.ComponentPropsWithoutRef<"div">) => (
-    <div className="flex flex-col gap-6" {...props}>
+    <div className="flex flex-col gap-10" {...props}>
       <Typography.h1 className="text-center">{title}</Typography.h1>
       <div className={className}>{children}</div>
     </div>

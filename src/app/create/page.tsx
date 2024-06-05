@@ -57,40 +57,42 @@ export default function Create() {
   }, [entityType, methods]);
 
   return (
-    <Form className="space-y-8" methods={methods} onSubmit={onSubmit}>
-      <RHFRadioInput
-        className="flex space-x-4"
-        required
-        name="entityType"
-        label="Entity Type"
-        items={[
-          {
-            label: "Contact",
-            value: "CONTACT",
-          },
-          {
-            label: "Company",
-            value: "COMPANY",
-          },
-        ]}
-      />
-      <RHFTextInput required name="name" label="Name" placeholder="Enter the name" />
-      {entityType === ENTITY_TYPES.CONTACT && (
-        <>
-          <RHFTextInput required name="email" label="Email" placeholder="Enter your email" />
-          <RHFTextInput required name="phone" label="Phone Number" placeholder="Enter your phone number" />
-        </>
-      )}
-      {entityType === ENTITY_TYPES.COMPANY && (
-        <>
-          <RHFTextInput required name="contactEmail" label="Contact Email" placeholder="Enter your email" />
-          <RHFTextInput required name="industry" label="Industy" placeholder="Enter your industry" />
-        </>
-      )}
-      <Button disabled={loading} type="submit">
-        Submit
-      </Button>
-      {!!error && <Typography.note>{error.message}</Typography.note>}
-    </Form>
+    <div className="flex justify-center">
+      <Form className="space-y-8 w-full max-w-96" methods={methods} onSubmit={onSubmit}>
+        <RHFRadioInput
+          className="flex space-x-4"
+          required
+          name="entityType"
+          label="Entity Type"
+          items={[
+            {
+              label: "Contact",
+              value: "CONTACT",
+            },
+            {
+              label: "Company",
+              value: "COMPANY",
+            },
+          ]}
+        />
+        <RHFTextInput required name="name" label="Name" placeholder="Enter the name" />
+        {entityType === ENTITY_TYPES.CONTACT && (
+          <>
+            <RHFTextInput required name="email" label="Email" placeholder="Enter your email" />
+            <RHFTextInput required name="phone" label="Phone Number" placeholder="Enter your phone number" />
+          </>
+        )}
+        {entityType === ENTITY_TYPES.COMPANY && (
+          <>
+            <RHFTextInput required name="contactEmail" label="Contact Email" placeholder="Enter your email" />
+            <RHFTextInput required name="industry" label="Industy" placeholder="Enter your industry" />
+          </>
+        )}
+        <Button disabled={loading} type="submit">
+          Submit
+        </Button>
+        {!!error && <Typography.note>{error.message}</Typography.note>}
+      </Form>
+    </div>
   );
 }
