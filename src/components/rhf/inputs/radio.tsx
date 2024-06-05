@@ -1,12 +1,20 @@
-import { TextInput, type TextInputProps } from "@/components/inputs/text";
+import type { RadioInputProps } from "@/components/inputs/radio";
+import { RadioInput } from "@/components/inputs/radio";
 import { FormField } from "@/components/rhf/form-field";
 import type { RHFInputProps } from "@/types/inputs";
-import type { FC } from "react";
 import { useFormContext } from "react-hook-form";
 
-type RHFTextInput = RHFInputProps & Omit<TextInputProps, "value" | "onChange">;
+type RHFChecboxProps<T extends string> = RHFInputProps & Omit<RadioInputProps<T>, "value" | "onChange">;
 
-export const RHFTextInput: FC<RHFTextInput> = ({ name, label, description, message, required, rules = {}, ...props }) => {
+export const RHFTextInput = <T extends string>({
+  name,
+  label,
+  description,
+  message,
+  required,
+  rules = {},
+  ...props
+}: RHFChecboxProps<T>) => {
   const { control } = useFormContext();
   return (
     <FormField.Root
@@ -17,7 +25,7 @@ export const RHFTextInput: FC<RHFTextInput> = ({ name, label, description, messa
         <FormField.Item>
           {!!label && <FormField.Label>{label}</FormField.Label>}
           <FormField.Control>
-            <TextInput {...props} {...field} />
+            <RadioInput {...props} {...field} />
           </FormField.Control>
           {!!description && <FormField.Description>{description}</FormField.Description>}
           <FormField.Message>{message}</FormField.Message>
