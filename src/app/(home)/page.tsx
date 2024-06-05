@@ -4,44 +4,54 @@ import { Grid } from "@/components/grid";
 import { Button } from "@/components/ui/button";
 import { ENTITY_TYPES } from "@/constants/entity";
 import { GET_ENTITIES, UPDATE_ENTITY } from "@/graphql/entities";
-import type { GetEntitiesQuery } from "@/utils/gql/graphql";
+import type { Company, Contact, GetEntitiesQuery } from "@/utils/gql/graphql";
 import type { NewValueParams } from "@ag-grid-community/core";
 import { useMutation, useQuery } from "@apollo/client";
+import { Pencil } from "lucide-react";
 import { useState } from "react";
 
-const columns = [
-  {
-    headerName: "About",
-    children: [
-      {
-        field: "__typename",
-        headerName: "Type",
-        // editable: true,
-        // cellEditor: "agSelectCellEditor",
-        // cellEditorParams: {
-        //   values: ["Contact", "Company", "Other"],
-        // },
-      },
-      {
-        field: "name",
-        filter: true,
-        floatingFilter: true,
-        editable: true,
-      },
-      { field: "industry", filter: true, floatingFilter: true },
-    ],
-  },
-  {
-    headerName: "Contact Info",
-    children: [
-      { field: "phone", filter: true, floatingFilter: true },
-      { field: "email", filter: true, floatingFilter: true },
-      { field: "contactEmail", filter: true, floatingFilter: true },
-    ],
-  },
-];
-
 const ConnectionsGrid = ({ entries }: { entries: GetEntitiesQuery["getEntities"] }) => {
+  const columns = [
+    {
+      headerName: "About",
+      children: [
+        {
+          field: "__typename",
+          headerName: "Type",
+          // editable: true,
+          // cellEditor: "agSelectCellEditor",
+          // cellEditorParams: {
+          //   values: ["Contact", "Company", "Other"],
+          // },
+        },
+        {
+          field: "name",
+          filter: true,
+          floatingFilter: true,
+          editable: true,
+        },
+        { field: "industry", filter: true, floatingFilter: true },
+      ],
+    },
+    {
+      headerName: "Contact Info",
+      children: [
+        { field: "phone", filter: true, floatingFilter: true },
+        { field: "email", filter: true, floatingFilter: true },
+        { field: "contactEmail", filter: true, floatingFilter: true },
+      ],
+    },
+    {
+      headerName: "Actions",
+      field: "actions",
+      cellRenderer: ({ data }: { data: Contact | Company }) => (
+        <Button href={`/edit/${data.id}`} variant="ghost" size="icon" className="hover:text-muted-foreground">
+          <Pencil className="h-4 w-4" />
+        </Button>
+      ),
+    },
+  ];
+
   const [rowData, setRowData] = useState<GetEntitiesQuery["getEntities"]>(JSON.parse(JSON.stringify(entries)));
   const [updateEntityMutation] = useMutation(UPDATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
