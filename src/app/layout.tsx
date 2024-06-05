@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Layout } from "@/components/layout";
 import ApolloClientProvider from "@/contexts/apollo";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ApolloClientProvider>{children}</ApolloClientProvider>
+        <ApolloClientProvider>
+          <Layout>{children}</Layout>
+        </ApolloClientProvider>
       </body>
     </html>
   );
