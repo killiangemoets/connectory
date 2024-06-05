@@ -15,9 +15,9 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 
-export default function Create() {
+const CreateEntityForm = () => {
   const router = useRouter();
-  const [mutateFunction, { loading, error }] = useMutation(CREATE_ENTITY, {
+  const [createEntityMutation, { loading, error }] = useMutation(CREATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
     onCompleted: () => {
       router.push("/");
@@ -34,7 +34,7 @@ export default function Create() {
   });
 
   function onSubmit(data: CreateEntityData) {
-    mutateFunction({
+    createEntityMutation({
       variables: {
         input: data,
       },
@@ -93,6 +93,14 @@ export default function Create() {
         </Button>
         {!!error && <Typography.error className="text-center">Something went wrong, please try again!</Typography.error>}
       </Form>
+    </div>
+  );
+};
+
+export default function Create() {
+  return (
+    <div className="flex justify-center">
+      <CreateEntityForm />
     </div>
   );
 }
