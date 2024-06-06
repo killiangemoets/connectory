@@ -14,15 +14,17 @@ type FormFieldContextValue<
 > = {
   name: TName;
   required?: boolean;
+  hideError?: boolean;
 };
 
 const [FormFieldContextProvider, useFormFieldContext] = createContext<FormFieldContextValue>();
 
 const Root = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>({
+  hideError = false,
   ...props
-}: ControllerProps<TFieldValues, TName>) => {
+}: ControllerProps<TFieldValues, TName> & { hideError?: boolean }) => {
   return (
-    <FormFieldContextProvider value={{ name: props.name, required: !!props?.rules?.required }}>
+    <FormFieldContextProvider value={{ name: props.name, required: !!props?.rules?.required, hideError }}>
       <Controller {...props} />
     </FormFieldContextProvider>
   );
@@ -49,6 +51,7 @@ const useFormField = () => {
     formDescriptionId: `${id}-form-item-description`,
     formMessageId: `${id}-form-item-message`,
     ...fieldState,
+    error: fieldContext.hideError ? undefined : fieldState.error,
   };
 };
 

@@ -25,6 +25,7 @@ export const EntityForm = <T extends CreateEntityData | UpdateEntityData>({ meth
   return (
     <Form className="flex flex-col gap-6 w-full max-w-96" methods={methods} onSubmit={onSubmit}>
       <RHFRadioInput
+        hideError
         className="flex space-x-4"
         required
         name="entityType"

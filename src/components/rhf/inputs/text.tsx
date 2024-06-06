@@ -6,13 +6,14 @@ import { useFormContext } from "react-hook-form";
 
 type RHFTextInput = RHFInputProps & Omit<TextInputProps, "value" | "onChange">;
 
-export const RHFTextInput: FC<RHFTextInput> = ({ name, label, description, message, required, rules = {}, ...props }) => {
+export const RHFTextInput: FC<RHFTextInput> = ({ name, label, description, message, required, rules = {}, hideError, ...props }) => {
   const { control } = useFormContext();
   return (
     <FormField.Root
       rules={{ ...rules, required }}
       control={control}
       name={name}
+      hideError={hideError}
       render={({ field }) => (
         <FormField.Item>
           {!!label && <FormField.Label>{label}</FormField.Label>}
