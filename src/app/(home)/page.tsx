@@ -10,7 +10,7 @@ import type { Company, Contact, GetEntitiesQuery } from "@/types/generated/graph
 import type { ColGroupDef, NewValueParams } from "@ag-grid-community/core";
 import { useMutation, useQuery } from "@apollo/client";
 import { Pencil } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const columns: ColGroupDef<Entity>[] = [
@@ -64,6 +64,9 @@ const columns: ColGroupDef<Entity>[] = [
 const EntitiesGrid = ({ entities }: { entities: Entity[] }) => {
   // Deep copy the entities to avoid mutating the original data
   const [rowData, setRowData] = useState<Entity[]>(JSON.parse(JSON.stringify(entities)));
+  useEffect(() => {
+    setRowData(JSON.parse(JSON.stringify(entities)));
+  }, [entities]);
 
   const [updateEntityMutation] = useMutation(UPDATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
