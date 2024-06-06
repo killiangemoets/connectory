@@ -5,7 +5,7 @@ import { ENTITY_TYPES } from "@/constants/entity";
 import { GET_ENTITIES, GET_ENTITY_BY_ID, UPDATE_ENTITY } from "@/graphql/entities";
 import { updateEntitySchema } from "@/schemas/entity";
 import type { Entity, UpdateEntityData } from "@/types/entity";
-import type { GetEntityQuery } from "@/utils/gql/graphql";
+import type { GetEntityQuery, UpdateEntityMutation } from "@/utils/gql/graphql";
 import { useMutation, useQuery } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams, useRouter } from "next/navigation";
@@ -14,8 +14,7 @@ import toast from "react-hot-toast";
 
 const EditEntityForm = ({ entity }: { entity: Entity }) => {
   const router = useRouter();
-  // const [updateEntityMutation, { loading, error }] = useMutation<{ createEntity: Entity }, MutationUpdateEntityArgs>(UPDATE_ENTITY, {
-  const [updateEntityMutation, { loading, error }] = useMutation(UPDATE_ENTITY, {
+  const [updateEntityMutation, { loading, error }] = useMutation<UpdateEntityMutation>(UPDATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
     onCompleted: () => {
       toast.success("Connection updated!", {

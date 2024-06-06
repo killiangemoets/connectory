@@ -19,11 +19,6 @@ const columns: ColGroupDef<Entity>[] = [
       {
         field: "__typename",
         headerName: "Type",
-        // editable: true,
-        // cellEditor: "agSelectCellEditor",
-        // cellEditorParams: {
-        //   values: ["Contact", "Company", "Other"],
-        // },
       },
       {
         field: "name",

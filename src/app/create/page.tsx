@@ -5,6 +5,7 @@ import { EntityForm } from "@/components/entity-form";
 import { CREATE_ENTITY, GET_ENTITIES } from "@/graphql/entities";
 import { createEntitySchema } from "@/schemas/entity";
 import type { CreateEntityData } from "@/types/entity";
+import type { CreateEntityMutation } from "@/utils/gql/graphql";
 import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -13,8 +14,7 @@ import toast from "react-hot-toast";
 
 const CreateEntityForm = () => {
   const router = useRouter();
-  // const [createEntityMutation, { loading, error }] = useMutation<{ createEntity: Entity }, MutationCreateEntityArgs>(CREATE_ENTITY, {
-  const [createEntityMutation, { loading, error }] = useMutation(CREATE_ENTITY, {
+  const [createEntityMutation, { loading, error }] = useMutation<CreateEntityMutation>(CREATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
     onCompleted: () => {
       toast.success("New connection created!", {
