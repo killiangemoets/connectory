@@ -1,6 +1,6 @@
 import { SearchInput } from "./inputs/text";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-import type { ColDef, GridOptions, NewValueParams } from "@ag-grid-community/core";
+import type { ColDef, ColGroupDef, GridOptions, NewValueParams } from "@ag-grid-community/core";
 import { ModuleRegistry } from "@ag-grid-community/core";
 import { AgGridReact } from "@ag-grid-community/react";
 import "@ag-grid-community/styles/ag-grid.css";
@@ -9,7 +9,11 @@ import { useState } from "react";
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-export const Grid = <TData extends boolean>({
+export const AgGrid = <
+  TData extends {
+    [key: string]: any;
+  }
+>({
   data,
   columns,
   pagination = true,
@@ -19,7 +23,7 @@ export const Grid = <TData extends boolean>({
   extra,
 }: {
   data: GridOptions<TData>["rowData"];
-  columns: ColDef<TData>[];
+  columns: (ColDef<TData> | ColGroupDef<TData>)[];
   pagination?: boolean;
   paginationPageSize?: number;
   paginationPageSizeSelector?: number[];

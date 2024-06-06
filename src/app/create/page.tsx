@@ -17,6 +17,7 @@ import { useForm, useWatch } from "react-hook-form";
 
 const CreateEntityForm = () => {
   const router = useRouter();
+  // const [createEntityMutation, { loading, error }] = useMutation<{ createEntity: Entity }, MutationCreateEntityArgs>(CREATE_ENTITY, {
   const [createEntityMutation, { loading, error }] = useMutation(CREATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
     onCompleted: () => {

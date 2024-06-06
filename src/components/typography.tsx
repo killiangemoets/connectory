@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { error } from "console";
 import React from "react";
 
 export const Typography = {

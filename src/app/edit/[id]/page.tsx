@@ -17,6 +17,7 @@ import { useForm, useWatch } from "react-hook-form";
 
 const EditEntityForm = () => {
   const router = useRouter();
+  // const [updateEntityMutation, { loading, error }] = useMutation<{ createEntity: Entity }, MutationUpdateEntityArgs>(UPDATE_ENTITY, {
   const [updateEntityMutation, { loading, error }] = useMutation(UPDATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
     onCompleted: () => {
