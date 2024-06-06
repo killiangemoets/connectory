@@ -6,7 +6,7 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Layout.Content className="flex flex-col gap-2" title="Connections">
+    <Layout.Content className="flex flex-col gap-2" title="My Connections">
       {children}
     </Layout.Content>
   );
