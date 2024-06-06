@@ -5,7 +5,6 @@ import { z } from "zod";
 export const createEntitySchema = z
   .object({
     entityType: z.nativeEnum(ENTITY_TYPES, { required_error: "Please select an entity type" }),
-    id: z.string().optional(),
     name: z
       .string({ message: "Please enter a name" })
       .max(MAX_CHAR_TEXT_INPUT, {
@@ -89,7 +88,7 @@ export const createEntitySchema = z
 export const updateEntitySchema = z
   .object({
     entityType: z.nativeEnum(ENTITY_TYPES, { required_error: "Please select an entity type" }),
-    id: z.string().optional(),
+    id: z.string().uuid({ message: "Please enter a valid id" }),
     name: z
       .string({ message: "Please enter a name" })
       .max(MAX_CHAR_TEXT_INPUT, {

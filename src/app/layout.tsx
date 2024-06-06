@@ -3,6 +3,7 @@ import { Layout } from "@/components/layout";
 import ApolloClientProvider from "@/contexts/apollo";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ApolloClientProvider>
-        <Layout.Body className={inter.className}>{children}</Layout.Body>
+        <Layout.Body className={inter.className}>
+          {children}
+          <Toaster position="bottom-right" containerClassName="text-lg font-normal" />
+        </Layout.Body>
       </ApolloClientProvider>
     </html>
   );

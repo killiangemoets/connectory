@@ -8,8 +8,8 @@ import type { CreateEntityData } from "@/types/entity";
 import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const CreateEntityForm = () => {
   const router = useRouter();
@@ -17,6 +17,12 @@ const CreateEntityForm = () => {
   const [createEntityMutation, { loading, error }] = useMutation(CREATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
     onCompleted: () => {
+      toast.success("New connection created!", {
+        duration: 5000,
+        style: {
+          fontWeight: 600,
+        },
+      });
       router.push("/");
     },
     onError: (error) => {
@@ -38,20 +44,20 @@ const CreateEntityForm = () => {
     });
   }
 
-  const entityType = useWatch({
-    name: "entityType",
-    control: methods.control,
-  });
+  // const entityType = useWatch({
+  //   name: "entityType",
+  //   control: methods.control,
+  // });
 
-  useEffect(() => {
-    if (entityType === ENTITY_TYPES.CONTACT) {
-      methods.setValue("contactEmail", methods.getValues("email"));
-      methods.setValue("industry", undefined);
-    } else if (entityType === ENTITY_TYPES.COMPANY) {
-      methods.setValue("email", methods.getValues("contactEmail"));
-      methods.setValue("phone", undefined);
-    }
-  }, [entityType, methods]);
+  // useEffect(() => {
+  //   if (entityType === ENTITY_TYPES.CONTACT) {
+  //     methods.setValue("contactEmail", methods.getValues("email"));
+  //     methods.setValue("industry", undefined);
+  //   } else if (entityType === ENTITY_TYPES.COMPANY) {
+  //     methods.setValue("email", methods.getValues("contactEmail"));
+  //     methods.setValue("phone", undefined);
+  //   }
+  // }, [entityType, methods]);
 
   return (
     <div className="flex justify-center">

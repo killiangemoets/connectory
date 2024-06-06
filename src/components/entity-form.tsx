@@ -4,33 +4,23 @@ import { RHFTextInput } from "./rhf/inputs/text";
 import { Typography } from "./typography";
 import { Button } from "./ui/button";
 import { ENTITY_TYPES } from "@/constants/entity";
+import { MAX_CHAR_TEXT_INPUT } from "@/constants/inputs";
 import type { CreateEntityData, UpdateEntityData } from "@/types/entity";
-import { useEffect } from "react";
-import type { SubmitHandler, UseFormReturn } from "react-hook-form";
+import type { Path, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useWatch } from "react-hook-form";
 
-type EntityFormProps = {
+type EntityFormProps<T extends CreateEntityData | UpdateEntityData> = {
   loading: boolean;
   error?: string | undefined;
-  methods: UseFormReturn<CreateEntityData | UpdateEntityData>;
-  onSubmit: SubmitHandler<CreateEntityData | UpdateEntityData>;
+  methods: UseFormReturn<T>;
+  onSubmit: SubmitHandler<T>;
 };
 
-export const EntityForm = ({ methods, onSubmit, loading, error }: EntityFormProps) => {
-  const entityType = useWatch({
-    name: "entityType",
+export const EntityForm = <T extends CreateEntityData | UpdateEntityData>({ methods, onSubmit, loading, error }: EntityFormProps<T>) => {
+  const entityType = useWatch<T>({
+    name: "entityType" as Path<T>,
     control: methods.control,
   });
-
-  useEffect(() => {
-    if (entityType === ENTITY_TYPES.CONTACT) {
-      methods.setValue("contactEmail", methods.getValues("email"));
-      methods.setValue("industry", undefined);
-    } else if (entityType === ENTITY_TYPES.COMPANY) {
-      methods.setValue("email", methods.getValues("contactEmail"));
-      methods.setValue("phone", undefined);
-    }
-  }, [entityType, methods]);
 
   return (
     <Form className="flex flex-col gap-6 w-full max-w-96" methods={methods} onSubmit={onSubmit}>
@@ -50,17 +40,17 @@ export const EntityForm = ({ methods, onSubmit, loading, error }: EntityFormProp
           },
         ]}
       />
-      <RHFTextInput required name="name" label="Name" placeholder="Enter the name" />
+      <RHFTextInput maxLength={MAX_CHAR_TEXT_INPUT} required name="name" label="Name" placeholder="Enter the name" />
       {entityType === ENTITY_TYPES.CONTACT && (
         <>
-          <RHFTextInput required name="email" label="Email" placeholder="Enter your email" />
+          <RHFTextInput maxLength={MAX_CHAR_TEXT_INPUT} required name="email" label="Email" placeholder="Enter your email" />
           <RHFTextInput required name="phone" label="Phone Number" placeholder="Enter your phone number" />
         </>
       )}
       {entityType === ENTITY_TYPES.COMPANY && (
         <>
-          <RHFTextInput required name="contactEmail" label="Contact Email" placeholder="Enter your email" />
-          <RHFTextInput required name="industry" label="Industy" placeholder="Enter your industry" />
+          <RHFTextInput maxLength={MAX_CHAR_TEXT_INPUT} required name="contactEmail" label="Contact Email" placeholder="Enter your email" />
+          <RHFTextInput maxLength={MAX_CHAR_TEXT_INPUT} required name="industry" label="Industy" placeholder="Enter your industry" />
         </>
       )}
       <Button disabled={loading} type="submit" className="mt-6">

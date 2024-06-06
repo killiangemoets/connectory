@@ -4,13 +4,13 @@ import { AgGrid } from "@/components/ag-grid";
 import { Button } from "@/components/ui/button";
 import { ENTITY_TYPES } from "@/constants/entity";
 import { GET_ENTITIES, UPDATE_ENTITY } from "@/graphql/entities";
+import type { Entity } from "@/types/entity";
 import type { Company, Contact, GetEntitiesQuery } from "@/utils/gql/graphql";
 import type { ColGroupDef, NewValueParams } from "@ag-grid-community/core";
 import { useMutation, useQuery } from "@apollo/client";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
-
-type Entity = Contact | Company;
+import toast from "react-hot-toast";
 
 const columns: ColGroupDef<Entity>[] = [
   {
@@ -64,8 +64,12 @@ const EntitiesGrid = ({ entities }: { entities: Entity[] }) => {
   const [updateEntityMutation] = useMutation(UPDATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
     onCompleted: () => {
-      // eslint-disable-next-line no-console
-      console.log("Updated");
+      toast.success("Connection updated!", {
+        duration: 5000,
+        style: {
+          fontWeight: 600,
+        },
+      });
     },
     onError: (error) => {
       console.error(error);

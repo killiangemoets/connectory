@@ -94,6 +94,27 @@ export type GetEntitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetEntitiesQuery = { __typename?: 'Query', getEntities?: Array<{ __typename?: 'Company', industry: string, contactEmail?: string | null, id: string, name: string } | { __typename?: 'Contact', email: string, phone?: string | null, id: string, name: string } | null> | null };
 
+export type GetEntityQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetEntityQuery = { __typename?: 'Query', getEntity?: { __typename?: 'Company', industry: string, contactEmail?: string | null, id: string, name: string } | { __typename?: 'Contact', email: string, phone?: string | null, id: string, name: string } | null };
+
+export type CreateEntityMutationVariables = Exact<{
+  input: CreateEntityInput;
+}>;
+
+
+export type CreateEntityMutation = { __typename?: 'Mutation', createEntity?: { __typename?: 'Company', industry: string, contactEmail?: string | null, id: string, name: string } | { __typename?: 'Contact', email: string, phone?: string | null, id: string, name: string } | null };
+
+export type UpdateEntityMutationVariables = Exact<{
+  input: UpdateEntityInput;
+}>;
+
+
+export type UpdateEntityMutation = { __typename?: 'Mutation', updateEntity?: { __typename?: 'Company', industry: string, contactEmail?: string | null, id: string, name: string } | { __typename?: 'Contact', email: string, phone?: string | null, id: string, name: string } | null };
+
 
 export const GetEntitiesDocument = gql`
     query GetEntities {
@@ -143,3 +164,136 @@ export type GetEntitiesQueryHookResult = ReturnType<typeof useGetEntitiesQuery>;
 export type GetEntitiesLazyQueryHookResult = ReturnType<typeof useGetEntitiesLazyQuery>;
 export type GetEntitiesSuspenseQueryHookResult = ReturnType<typeof useGetEntitiesSuspenseQuery>;
 export type GetEntitiesQueryResult = Apollo.QueryResult<GetEntitiesQuery, GetEntitiesQueryVariables>;
+export const GetEntityDocument = gql`
+    query GetEntity($id: ID!) {
+  getEntity(id: $id) {
+    id
+    name
+    ... on Contact {
+      email
+      phone
+    }
+    ... on Company {
+      industry
+      contactEmail
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetEntityQuery__
+ *
+ * To run a query within a React component, call `useGetEntityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEntityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEntityQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetEntityQuery(baseOptions: Apollo.QueryHookOptions<GetEntityQuery, GetEntityQueryVariables> & ({ variables: GetEntityQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEntityQuery, GetEntityQueryVariables>(GetEntityDocument, options);
+      }
+export function useGetEntityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEntityQuery, GetEntityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEntityQuery, GetEntityQueryVariables>(GetEntityDocument, options);
+        }
+export function useGetEntitySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetEntityQuery, GetEntityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetEntityQuery, GetEntityQueryVariables>(GetEntityDocument, options);
+        }
+export type GetEntityQueryHookResult = ReturnType<typeof useGetEntityQuery>;
+export type GetEntityLazyQueryHookResult = ReturnType<typeof useGetEntityLazyQuery>;
+export type GetEntitySuspenseQueryHookResult = ReturnType<typeof useGetEntitySuspenseQuery>;
+export type GetEntityQueryResult = Apollo.QueryResult<GetEntityQuery, GetEntityQueryVariables>;
+export const CreateEntityDocument = gql`
+    mutation CreateEntity($input: CreateEntityInput!) {
+  createEntity(input: $input) {
+    id
+    name
+    ... on Contact {
+      email
+      phone
+    }
+    ... on Company {
+      industry
+      contactEmail
+    }
+  }
+}
+    `;
+export type CreateEntityMutationFn = Apollo.MutationFunction<CreateEntityMutation, CreateEntityMutationVariables>;
+
+/**
+ * __useCreateEntityMutation__
+ *
+ * To run a mutation, you first call `useCreateEntityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateEntityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createEntityMutation, { data, loading, error }] = useCreateEntityMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateEntityMutation(baseOptions?: Apollo.MutationHookOptions<CreateEntityMutation, CreateEntityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateEntityMutation, CreateEntityMutationVariables>(CreateEntityDocument, options);
+      }
+export type CreateEntityMutationHookResult = ReturnType<typeof useCreateEntityMutation>;
+export type CreateEntityMutationResult = Apollo.MutationResult<CreateEntityMutation>;
+export type CreateEntityMutationOptions = Apollo.BaseMutationOptions<CreateEntityMutation, CreateEntityMutationVariables>;
+export const UpdateEntityDocument = gql`
+    mutation UpdateEntity($input: UpdateEntityInput!) {
+  updateEntity(input: $input) {
+    id
+    name
+    ... on Contact {
+      email
+      phone
+    }
+    ... on Company {
+      industry
+      contactEmail
+    }
+  }
+}
+    `;
+export type UpdateEntityMutationFn = Apollo.MutationFunction<UpdateEntityMutation, UpdateEntityMutationVariables>;
+
+/**
+ * __useUpdateEntityMutation__
+ *
+ * To run a mutation, you first call `useUpdateEntityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateEntityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateEntityMutation, { data, loading, error }] = useUpdateEntityMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateEntityMutation(baseOptions?: Apollo.MutationHookOptions<UpdateEntityMutation, UpdateEntityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateEntityMutation, UpdateEntityMutationVariables>(UpdateEntityDocument, options);
+      }
+export type UpdateEntityMutationHookResult = ReturnType<typeof useUpdateEntityMutation>;
+export type UpdateEntityMutationResult = Apollo.MutationResult<UpdateEntityMutation>;
+export type UpdateEntityMutationOptions = Apollo.BaseMutationOptions<UpdateEntityMutation, UpdateEntityMutationVariables>;
