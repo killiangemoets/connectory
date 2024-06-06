@@ -120,7 +120,7 @@ export default function Home() {
   const { loading, error, data: getEntitiesQuery } = useQuery<GetEntitiesQuery>(GET_ENTITIES);
 
   if (loading) return <Typography.body className="text-center pt-24">Loading...</Typography.body>;
-  if (error) return <Typography.error className="text-center pt-24">Error: {error.message}</Typography.error>;
+  if (error) return <Typography.error className="text-center pt-24">Something went wrong, please try again!</Typography.error>;
 
   const entities = getEntitiesQuery?.getEntities;
   if (!entities || entities?.length === 0) return <Typography.error className="text-center pt-24">No data</Typography.error>;

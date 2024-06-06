@@ -57,14 +57,12 @@ const EditEntityForm = ({ entity }: { entity: Entity }) => {
   }
 
   return (
-    <div className="flex justify-center">
-      <EntityForm
-        methods={methods}
-        onSubmit={onSubmit}
-        loading={loading}
-        error={!!error ? "Something went wrong, please try again!" : undefined}
-      />
-    </div>
+    <EntityForm
+      methods={methods}
+      onSubmit={onSubmit}
+      loading={loading}
+      error={!!error ? "Something went wrong, please try again!" : undefined}
+    />
   );
 };
 
@@ -79,13 +77,13 @@ export default function Edit() {
   });
 
   if (loading) return <Typography.body className="text-center pt-24">Loading...</Typography.body>;
-  if (error) return <Typography.error className="text-center pt-24">Error: {error.message}</Typography.error>;
+  if (error) return <Typography.error className="text-center pt-24">Something went wrong, please try again!</Typography.error>;
 
   const entity = getEntityByIdQuery?.getEntity;
   if (!entity) return <Typography.body className="text-center pt-24">No entity found</Typography.body>;
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-full">
       <EditEntityForm entity={entity} />
     </div>
   );

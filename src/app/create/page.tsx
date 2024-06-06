@@ -45,7 +45,7 @@ const CreateEntityForm = () => {
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-full">
       <EntityForm
         methods={methods}
         onSubmit={onSubmit}
@@ -58,7 +58,7 @@ const CreateEntityForm = () => {
 
 export default function Create() {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-full">
       <CreateEntityForm />
     </div>
   );
