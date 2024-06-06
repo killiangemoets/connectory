@@ -17,6 +17,23 @@ export const GET_ENTITIES = gql`
   }
 `;
 
+export const GET_ENTITY_BY_ID = gql`
+  query GetEntity($id: ID!) {
+    getEntity(id: $id) {
+      id
+      name
+      ... on Contact {
+        email
+        phone
+      }
+      ... on Company {
+        industry
+        contactEmail
+      }
+    }
+  }
+`;
+
 export const CREATE_ENTITY = gql`
   mutation CreateEntity($input: CreateEntityInput!) {
     createEntity(input: $input) {

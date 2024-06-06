@@ -4,13 +4,13 @@ import { AgGrid } from "@/components/ag-grid";
 import { Button } from "@/components/ui/button";
 import { ENTITY_TYPES } from "@/constants/entity";
 import { GET_ENTITIES, UPDATE_ENTITY } from "@/graphql/entities";
+import type { Entity } from "@/types/entity";
 import type { Company, Contact, GetEntitiesQuery } from "@/utils/gql/graphql";
 import type { ColGroupDef, NewValueParams } from "@ag-grid-community/core";
 import { useMutation, useQuery } from "@apollo/client";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
-
-type Entity = Contact | Company;
+import toast from "react-hot-toast";
 
 const columns: ColGroupDef<Entity>[] = [
   {
@@ -19,11 +19,6 @@ const columns: ColGroupDef<Entity>[] = [
       {
         field: "__typename",
         headerName: "Type",
-        // editable: true,
-        // cellEditor: "agSelectCellEditor",
-        // cellEditorParams: {
-        //   values: ["Contact", "Company", "Other"],
-        // },
       },
       {
         field: "name",
@@ -38,8 +33,15 @@ const columns: ColGroupDef<Entity>[] = [
     headerName: "Contact Info",
     children: [
       { field: "phone", filter: true, floatingFilter: true },
-      { field: "email", filter: true, floatingFilter: true },
-      { field: "contactEmail", filter: true, floatingFilter: true },
+      {
+        headerName: "(Contact) Email",
+        floatingFilter: true,
+        valueGetter: (params) => {
+          if (params.data?.__typename === "Contact") return params.data.email;
+          if (params.data?.__typename === "Company") return params.data.contactEmail;
+          return null;
+        },
+      },
     ],
   },
   {
@@ -64,8 +66,12 @@ const EntitiesGrid = ({ entities }: { entities: Entity[] }) => {
   const [updateEntityMutation] = useMutation(UPDATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
     onCompleted: () => {
-      // eslint-disable-next-line no-console
-      console.log("Updated");
+      toast.success("Connection updated!", {
+        duration: 5000,
+        style: {
+          fontWeight: 600,
+        },
+      });
     },
     onError: (error) => {
       console.error(error);

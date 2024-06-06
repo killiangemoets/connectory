@@ -13,6 +13,7 @@ export const RHFRadioInput = <T extends string>({
   message,
   required,
   rules = {},
+  hideError,
   ...props
 }: RHFRadioInputProps<T>) => {
   const { control } = useFormContext();
@@ -20,6 +21,7 @@ export const RHFRadioInput = <T extends string>({
     <FormField.Root
       rules={{ ...rules, required }}
       control={control}
+      hideError={hideError}
       name={name}
       render={({ field }) => (
         <FormField.Item>
