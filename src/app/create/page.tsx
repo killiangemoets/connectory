@@ -1,11 +1,7 @@
 "use client";
 
 import { ENTITY_TYPES } from "../../constants/entity";
-import { Form } from "@/components/rhf/form";
-import { RHFRadioInput } from "@/components/rhf/inputs/radio";
-import { RHFTextInput } from "@/components/rhf/inputs/text";
-import { Typography } from "@/components/typography";
-import { Button } from "@/components/ui/button";
+import { EntityForm } from "@/components/entity-form";
 import { CREATE_ENTITY, GET_ENTITIES } from "@/graphql/entities";
 import { createEntitySchema } from "@/schemas/entity";
 import type { CreateEntityData } from "@/types/entity";
@@ -59,41 +55,12 @@ const CreateEntityForm = () => {
 
   return (
     <div className="flex justify-center">
-      <Form className="flex flex-col gap-6 w-full max-w-96" methods={methods} onSubmit={onSubmit}>
-        <RHFRadioInput
-          className="flex space-x-4"
-          required
-          name="entityType"
-          label="Entity Type"
-          items={[
-            {
-              label: "Contact",
-              value: "CONTACT",
-            },
-            {
-              label: "Company",
-              value: "COMPANY",
-            },
-          ]}
-        />
-        <RHFTextInput required name="name" label="Name" placeholder="Enter the name" />
-        {entityType === ENTITY_TYPES.CONTACT && (
-          <>
-            <RHFTextInput required name="email" label="Email" placeholder="Enter your email" />
-            <RHFTextInput required name="phone" label="Phone Number" placeholder="Enter your phone number" />
-          </>
-        )}
-        {entityType === ENTITY_TYPES.COMPANY && (
-          <>
-            <RHFTextInput required name="contactEmail" label="Contact Email" placeholder="Enter your email" />
-            <RHFTextInput required name="industry" label="Industy" placeholder="Enter your industry" />
-          </>
-        )}
-        <Button disabled={loading} type="submit" className="mt-6">
-          Submit
-        </Button>
-        {!!error && <Typography.error className="text-center">Something went wrong, please try again!</Typography.error>}
-      </Form>
+      <EntityForm
+        methods={methods}
+        onSubmit={onSubmit}
+        loading={loading}
+        error={!!error ? "Something went wrong, please try again!" : undefined}
+      />
     </div>
   );
 };
