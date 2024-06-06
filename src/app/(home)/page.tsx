@@ -1,11 +1,12 @@
 "use client";
 
-import { AgGrid } from "@/components/ag-grid";
+import { Typography } from "@/components/typography";
+import { AgGrid } from "@/components/ui/ag-grid";
 import { Button } from "@/components/ui/button";
 import { ENTITY_TYPES } from "@/constants/entity";
 import { GET_ENTITIES, UPDATE_ENTITY } from "@/graphql/entities";
 import type { Entity } from "@/types/entity";
-import type { Company, Contact, GetEntitiesQuery } from "@/utils/gql/graphql";
+import type { Company, Contact, GetEntitiesQuery } from "@/types/generated/graphql";
 import type { ColGroupDef, NewValueParams } from "@ag-grid-community/core";
 import { useMutation, useQuery } from "@apollo/client";
 import { Pencil } from "lucide-react";
@@ -118,11 +119,11 @@ const EntitiesGrid = ({ entities }: { entities: Entity[] }) => {
 export default function Home() {
   const { loading, error, data: getEntitiesQuery } = useQuery<GetEntitiesQuery>(GET_ENTITIES);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <Typography.body className="text-center pt-24">Loading...</Typography.body>;
+  if (error) return <Typography.error className="text-center pt-24">Error: {error.message}</Typography.error>;
 
   const entities = getEntitiesQuery?.getEntities;
-  if (!entities || entities?.length === 0) return <p>No data</p>;
+  if (!entities || entities?.length === 0) return <Typography.error className="text-center pt-24">No data</Typography.error>;
 
   const notNullEntities = entities.filter((entity) => entity !== null) as Entity[];
 

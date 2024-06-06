@@ -1,6 +1,6 @@
 import { Typography } from "./typography";
 import { Button } from "./ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/tailwind";
 
 export const Navbar = ({ className }: { className?: string }) => {
   return (
@@ -16,7 +16,7 @@ export const Layout = {
   Body: ({ children, className, ...props }: React.ComponentPropsWithoutRef<"body">) => (
     <body className={cn("min-h-screen bg-primary/10", className)} {...props}>
       <Navbar />
-      <main className="h-full px-20 py-10">{children}</main>
+      <main className="h-full lg:px-16 md:px-8 px-4 py-10">{children}</main>
     </body>
   ),
   Content: ({ children, className, title, ...props }: { title: string } & React.ComponentPropsWithoutRef<"div">) => (

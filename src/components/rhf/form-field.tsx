@@ -1,8 +1,8 @@
 "use client";
 
 import { Label as LabelComponent } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
 import { createContext } from "@/utils/context";
+import { cn } from "@/utils/tailwind";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
