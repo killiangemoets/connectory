@@ -17,8 +17,8 @@ export const AgGrid = <
   data,
   columns,
   pagination = true,
-  paginationPageSize = 5,
-  paginationPageSizeSelector = [5, 10, 20],
+  paginationPageSize = 10,
+  paginationPageSizeSelector = [10, 20, 50],
   onCellValueChanged,
   extra,
 }: {

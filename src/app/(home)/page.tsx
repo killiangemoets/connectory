@@ -35,6 +35,7 @@ const columns: ColGroupDef<Entity>[] = [
       { field: "phone", filter: true, floatingFilter: true },
       {
         headerName: "(Contact) Email",
+        filter: true,
         floatingFilter: true,
         valueGetter: (params) => {
           if (params.data?.__typename === "Contact") return params.data.email;
