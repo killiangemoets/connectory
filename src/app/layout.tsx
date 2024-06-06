@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Connectory | Stay Connected!",
-  description: "Directory of contacts and companies to stay connected with.",
+  description: "Directory of contacts and companies to stay connected with",
 };
 
 export default function RootLayout({

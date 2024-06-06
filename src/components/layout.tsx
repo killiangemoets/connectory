@@ -1,10 +1,13 @@
 import { Typography } from "./typography";
+import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 
 export const Navbar = ({ className }: { className?: string }) => {
   return (
     <div className={cn("flex items-center gap-16 bg-primary w-full h-16 px-4 ", className)}>
-      <h4 className="text-heading-4 text-secondary italic tracking-wide">Connectory</h4>
+      <Button variant="ghost" href="/">
+        <h4 className="text-heading-4 text-secondary italic tracking-wide">Connectory</h4>
+      </Button>
     </div>
   );
 };

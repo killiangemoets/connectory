@@ -1,24 +1,24 @@
 "use client";
 
-import { ENTITY_TYPES } from "../../constants/entity";
 import { Form } from "@/components/rhf/form";
 import { RHFRadioInput } from "@/components/rhf/inputs/radio";
 import { RHFTextInput } from "@/components/rhf/inputs/text";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
-import { CREATE_ENTITY, GET_ENTITIES } from "@/graphql/entities";
-import { createEntitySchema } from "@/schemas/entity";
-import type { CreateEntityData } from "@/types/entity";
+import { ENTITY_TYPES } from "@/constants/entity";
+import { GET_ENTITIES, UPDATE_ENTITY } from "@/graphql/entities";
+import { updateEntitySchema } from "@/schemas/entity";
+import type { UpdateEntityData } from "@/types/entity";
 import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 
-const CreateEntityForm = () => {
+const EditEntityForm = () => {
   const router = useRouter();
-  // const [createEntityMutation, { loading, error }] = useMutation<{ createEntity: Entity }, MutationCreateEntityArgs>(CREATE_ENTITY, {
-  const [createEntityMutation, { loading, error }] = useMutation(CREATE_ENTITY, {
+  // const [updateEntityMutation, { loading, error }] = useMutation<{ createEntity: Entity }, MutationUpdateEntityArgs>(UPDATE_ENTITY, {
+  const [updateEntityMutation, { loading, error }] = useMutation(UPDATE_ENTITY, {
     refetchQueries: [{ query: GET_ENTITIES }],
     onCompleted: () => {
       router.push("/");
@@ -27,15 +27,15 @@ const CreateEntityForm = () => {
       console.error(error);
     },
   });
-  const methods = useForm<CreateEntityData>({
-    resolver: zodResolver(createEntitySchema),
+  const methods = useForm<UpdateEntityData>({
+    resolver: zodResolver(updateEntitySchema),
     defaultValues: {
       entityType: ENTITY_TYPES.CONTACT,
     },
   });
 
-  function onSubmit(data: CreateEntityData) {
-    createEntityMutation({
+  function onSubmit(data: UpdateEntityData) {
+    updateEntityMutation({
       variables: {
         input: data,
       },
@@ -98,10 +98,10 @@ const CreateEntityForm = () => {
   );
 };
 
-export default function Create() {
+export default function Edit() {
   return (
     <div className="flex justify-center">
-      <CreateEntityForm />
+      <EditEntityForm />
     </div>
   );
 }

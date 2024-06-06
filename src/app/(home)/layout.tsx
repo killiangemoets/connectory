@@ -5,5 +5,9 @@ export default function HomeLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Layout.Content className="flex flex-col gap-2" title="Home">{children}</Layout.Content>;
+  return (
+    <Layout.Content className="flex flex-col gap-2" title="Connections">
+      {children}
+    </Layout.Content>
+  );
 }

@@ -2,8 +2,8 @@ import { Layout } from "@/components/layout";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Create | Connectory",
-  description: "Create a new contact or company to stay connected with",
+  title: "Edit | Connectory",
+  description: "Edit a contact or company",
 };
 
 export default function CreateLayout({
@@ -11,5 +11,5 @@ export default function CreateLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Layout.Content title="New connection">{children}</Layout.Content>;
+  return <Layout.Content title="Edit connection">{children}</Layout.Content>;
 }

@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Search } from "lucide-react";
 import * as React from "react";
 
 export type TextInputProps = React.InputHTMLAttributes<HTMLInputElement>;
@@ -18,4 +19,14 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(({ classNam
 });
 TextInput.displayName = "TextInput";
 
-export { TextInput };
+const SearchInput = React.forwardRef<HTMLInputElement, TextInputProps>(({ className, placeholder, ...props }, ref) => {
+  return (
+    <div className="flex justify-center relative">
+      <Search className="w-4 h-4 absolute top-[50%] left-2 -translate-y-1/2 text-muted-foreground" />
+      <TextInput placeholder={placeholder || "Search"} className={cn("pl-10", className)} {...props} ref={ref} />
+    </div>
+  );
+});
+SearchInput.displayName = "SearchInput";
+
+export { TextInput, SearchInput };
