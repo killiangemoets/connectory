@@ -93,7 +93,7 @@ const resolvers = {
       return entities;
     },
     getEntity: (_, { id }) => {
-      return entities.find((entity) => entity.id === id);
+      return entities.find((entity) => entity.id === id) ?? null;
     },
   },
   Mutation: {
