@@ -48,7 +48,7 @@ const resolvers = {
       if (type === "Company") {
         return "Company";
       }
-      return null; // GraphQL will throw an error if this happens
+      return null;
     },
   },
   Query: {
