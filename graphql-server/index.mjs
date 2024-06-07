@@ -27,7 +27,7 @@ const entities = Array.from({ length: casual.integer(150, 200) }, () => {
     };
 });
 
-// Mocking the resolvers
+// Option 1: Mocking the resolvers
 // const mocks = {
 //   Query: () => ({
 //     getEntities: () => {
@@ -74,11 +74,10 @@ const entities = Array.from({ length: casual.integer(150, 200) }, () => {
 //   }),
 // };
 
-// Creating some basic resolvers to handle the queries and mutations
+// Option 2: Creating some basic resolvers to handle the queries and mutations and store the on the server ram
 const resolvers = {
   Entity: {
     __resolveType(obj) {
-      // console.log("RESOLVER - __resolveType");
       const type = obj.__typename || obj["$ref"].typeName;
       if (type === "Contact") {
         return "Contact";
@@ -91,17 +90,14 @@ const resolvers = {
   },
   Query: {
     getEntities: () => {
-      console.log("RESOLVER - getEntities");
       return entities;
     },
     getEntity: (_, { id }) => {
-      console.log("RESOLVER - getEntity", id);
       return entities.find((entity) => entity.id === id);
     },
   },
   Mutation: {
     createEntity: (_, { input }) => {
-      console.log("RESOLVER - createEntity");
       const newEntity = {
         __typename: input.entityType === "CONTACT" ? "Contact" : "Company",
         id: casual.uuid,
@@ -113,7 +109,6 @@ const resolvers = {
       entities.push(newEntity);
     },
     updateEntity: (_, { input }) => {
-      console.log("RESOLVER - updateEntity");
       const entity = entities.find((entity) => entity.id === input.id);
       if (!entity) {
         throw new Error("Entity not found");
