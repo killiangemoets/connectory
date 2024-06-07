@@ -80,7 +80,7 @@ export default function Edit() {
   if (error) return <Typography.error className="text-center pt-24">Something went wrong, please try again!</Typography.error>;
 
   const entity = getEntityByIdQuery?.getEntity;
-  if (!entity) return <Typography.body className="text-center pt-24">No entity found</Typography.body>;
+  if (!entity) return <Typography.error className="text-center pt-24">No connection found</Typography.error>;
 
   return (
     <div className="flex justify-center w-full">

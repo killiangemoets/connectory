@@ -53,6 +53,7 @@ const columns: ColGroupDef<Entity>[] = [
         sortable: false,
         cellRenderer: ({ data }: { data: Contact | Company }) => (
           <Button href={`/edit/${data.id}`} variant="ghost" size="icon" className="hover:text-muted-foreground">
+            <span className="sr-only">Edit connection</span>
             <Pencil className="h-4 w-4" />
           </Button>
         ),
@@ -125,8 +126,7 @@ export default function Home() {
   if (loading) return <Typography.body className="text-center pt-24">Loading...</Typography.body>;
   if (error) return <Typography.error className="text-center pt-24">Something went wrong, please try again!</Typography.error>;
 
-  const entities = getEntitiesQuery?.getEntities;
-  if (!entities || entities?.length === 0) return <Typography.error className="text-center pt-24">No data</Typography.error>;
+  const entities = getEntitiesQuery?.getEntities ?? [];
 
   const notNullEntities = entities.filter((entity) => entity !== null) as Entity[];
 
