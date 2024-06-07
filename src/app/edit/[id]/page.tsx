@@ -27,7 +27,7 @@ const EditEntityForm = ({ entity }: { entity: Entity }) => {
       router.push("/");
     },
     onError: (error) => {
-      console.error(error);
+      console.error(error.message);
     },
   });
 

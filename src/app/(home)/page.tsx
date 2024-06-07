@@ -63,7 +63,7 @@ const columns: ColGroupDef<Entity>[] = [
 ];
 
 const EntitiesGrid = ({ entities }: { entities: Entity[] }) => {
-  // Deep copy the entities to avoid mutating the original data
+  // Deep copy the entities
   const [rowData, setRowData] = useState<Entity[]>(JSON.parse(JSON.stringify(entities)));
   useEffect(() => {
     setRowData(JSON.parse(JSON.stringify(entities)));
@@ -80,7 +80,7 @@ const EntitiesGrid = ({ entities }: { entities: Entity[] }) => {
       });
     },
     onError: (error) => {
-      console.error(error);
+      console.error(error.message);
     },
   });
 
@@ -124,7 +124,7 @@ export default function Home() {
   const { loading, error, data: getEntitiesQuery } = useQuery<GetEntitiesQuery>(GET_ENTITIES);
 
   if (loading) return <Typography.body className="text-center pt-24">Loading...</Typography.body>;
-  if (error) return <Typography.error className="text-center pt-24">Something went wrong, please try again!</Typography.error>;
+  if (!!error) return <Typography.error className="text-center pt-24">Something went wrong, please try again!</Typography.error>;
 
   const entities = getEntitiesQuery?.getEntities ?? [];
 

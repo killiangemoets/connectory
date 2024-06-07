@@ -1,5 +1,3 @@
-"use client";
-
 import { Typography } from "../typography";
 import { cn } from "@/utils/tailwind";
 import { Label } from "@radix-ui/react-label";
