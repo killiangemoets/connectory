@@ -60,9 +60,14 @@ export const EntityForm = <T extends CreateEntityData | UpdateEntityData>({ meth
           <RHFTextInput maxLength={MAX_CHAR_TEXT_INPUT} required name="industry" label="Industy" placeholder="Enter your industry" />
         </>
       )}
-      <Button disabled={loading} type="submit" className="mt-6">
-        Submit
-      </Button>
+      <div className="mt-6 flex items-center gap-8">
+        <Button disabled={loading} variant="outline" className="w-[50%]" type="button" href="/">
+          Cancel
+        </Button>
+        <Button disabled={loading} type="submit" className="w-full">
+          Submit
+        </Button>
+      </div>
       {!!error && <Typography.error className="text-center">Something went wrong, please try again!</Typography.error>}
     </Form>
   );
