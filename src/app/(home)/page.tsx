@@ -4,6 +4,7 @@ import { Typography } from "@/components/typography";
 import { AgGrid } from "@/components/ui/ag-grid";
 import { Button } from "@/components/ui/button";
 import { ENTITY_TYPES } from "@/constants/entity";
+import { MAX_CHAR_TEXT_INPUT } from "@/constants/inputs";
 import { GET_ENTITIES, UPDATE_ENTITY } from "@/graphql/entities";
 import type { Entity } from "@/types/entity";
 import type { Company, Contact, GetEntitiesQuery } from "@/types/generated/graphql";
@@ -84,33 +85,41 @@ const EntitiesGrid = ({ entities }: { entities: Entity[] }) => {
     },
   });
 
-  const handleCellValueChanged = (event: NewValueParams<Entity>) => {
-    const updatedRowData: Entity[] = rowData?.map((row) => (row?.id === event.data?.id ? { ...event.data } : row));
+  const handleNameValueChanged = (event: NewValueParams<Entity>) => {
+    const isValidName = !!event.data.name && event.data.name.trim().length > 0 && event.data.name.trim().length <= MAX_CHAR_TEXT_INPUT;
+
+    const updatedRowData: Entity[] = entities?.map((entity) => {
+      return entity?.id === event.data?.id ? { ...entity, name: isValidName ? event.data.name.trim() : entity.name } : entity;
+    });
+
+    setRowData(updatedRowData);
+
+    if (!isValidName) return;
+
     updateEntityMutation({
       variables: {
         input: {
-          id: event.data?.id,
-          name: event.data?.name,
+          id: event.data.id,
+          name: event.data.name.trim(),
           entityType: event.data?.__typename === "Contact" ? ENTITY_TYPES.CONTACT : ENTITY_TYPES.COMPANY,
           ...(event.data?.__typename === "Contact" && {
-            email: event.data?.email,
-            phone: event.data?.phone,
+            email: event.data.email,
+            phone: event.data.phone,
           }),
           ...(event.data?.__typename === "Company" && {
-            industry: event.data?.industry,
-            contactEmail: event.data?.contactEmail,
+            industry: event.data.industry,
+            contactEmail: event.data.contactEmail,
           }),
         },
       },
     });
-    setRowData(updatedRowData);
   };
 
   return (
     <AgGrid
       data={rowData}
       columns={columns}
-      onCellValueChanged={handleCellValueChanged}
+      onCellValueChanged={handleNameValueChanged}
       extra={
         <Button className="ml-auto" href="/create">
           Add Connection
