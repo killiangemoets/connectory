@@ -4,6 +4,7 @@ import { Typography } from "@/components/typography";
 import { AgGrid } from "@/components/ui/ag-grid";
 import { Button } from "@/components/ui/button";
 import { ENTITY_TYPES } from "@/constants/entity";
+import { MAX_CHAR_TEXT_INPUT } from "@/constants/inputs";
 import { GET_ENTITIES, UPDATE_ENTITY } from "@/graphql/entities";
 import type { Entity } from "@/types/entity";
 import type { Company, Contact, GetEntitiesQuery } from "@/types/generated/graphql";
@@ -85,7 +86,7 @@ const EntitiesGrid = ({ entities }: { entities: Entity[] }) => {
   });
 
   const handleNameValueChanged = (event: NewValueParams<Entity>) => {
-    const isValidName = !!event.data.name && event.data.name.trim().length > 0;
+    const isValidName = !!event.data.name && event.data.name.trim().length > 0 && event.data.name.trim().length <= MAX_CHAR_TEXT_INPUT;
 
     const updatedRowData: Entity[] = entities?.map((entity) => {
       return entity?.id === event.data?.id ? { ...entity, name: isValidName ? event.data.name.trim() : entity.name } : entity;
