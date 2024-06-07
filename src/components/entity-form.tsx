@@ -53,12 +53,12 @@ export const EntityForm = <T extends CreateEntityData | UpdateEntityData>({ meth
       {entityType === ENTITY_TYPES.CONTACT && (
         <>
           <RHFTextInput maxLength={MAX_CHAR_TEXT_INPUT} required name="email" label="Email" placeholder="Enter your email" />
-          <RHFTextInput required name="phone" label="Phone Number" placeholder="Enter your phone number" />
+          <RHFTextInput name="phone" label="Phone Number" placeholder="Enter your phone number" />
         </>
       )}
       {entityType === ENTITY_TYPES.COMPANY && (
         <>
-          <RHFTextInput maxLength={MAX_CHAR_TEXT_INPUT} required name="contactEmail" label="Contact Email" placeholder="Enter your email" />
+          <RHFTextInput maxLength={MAX_CHAR_TEXT_INPUT} name="contactEmail" label="Contact Email" placeholder="Enter your email" />
           <RHFTextInput maxLength={MAX_CHAR_TEXT_INPUT} required name="industry" label="Industy" placeholder="Enter your industry" />
         </>
       )}

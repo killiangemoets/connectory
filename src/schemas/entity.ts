@@ -5,11 +5,11 @@ import { z } from "zod";
 const createEntityCommonSchema = z.object({
   name: z
     .string({ message: "Please enter a name" })
+    .trim()
     .min(1, { message: "Please enter a name" })
     .max(MAX_CHAR_TEXT_INPUT, {
       message: `The text cannot have more than ${MAX_CHAR_TEXT_INPUT} characters.`,
-    })
-    .trim(),
+    }),
 });
 
 const createContactSchema = createEntityCommonSchema.extend({
@@ -17,35 +17,39 @@ const createContactSchema = createEntityCommonSchema.extend({
   email: z
     .string({ message: "Please enter an email address" })
     .email({ message: "Please enter a valid email address" })
+    .trim()
     .max(MAX_CHAR_TEXT_INPUT, {
       message: `The text cannot have more than ${MAX_CHAR_TEXT_INPUT} characters.`,
-    })
-    .trim(),
+    }),
   phone: z
-    .string({ message: "Please enter a phone number" })
-    .min(1, { message: "Please enter a phone number" })
+    .string()
+    .trim()
     .max(MAX_CHAR_TEXT_INPUT, {
       message: `The text cannot have more than ${MAX_CHAR_TEXT_INPUT} characters.`,
     })
-    .trim(),
+    .transform((value) => (value === "" ? null : value))
+    .optional()
+    .nullable(),
 });
 const createCompanySchema = createEntityCommonSchema.extend({
   entityType: z.literal(ENTITY_TYPES.COMPANY, { message: "Please select an entity type" }),
   contactEmail: z
-    .string({ message: "Please enter an email address" })
+    .string()
+    .trim()
     .email({ message: "Please enter a valid email address" })
-    .min(1, { message: "Please enter an email address" })
     .max(MAX_CHAR_TEXT_INPUT, {
       message: `The text cannot have more than ${MAX_CHAR_TEXT_INPUT} characters.`,
     })
-    .trim(),
+    .or(z.literal("").transform((value) => (value === "" ? null : value)))
+    .optional()
+    .nullable(),
   industry: z
     .string({ message: "Please enter an industry" })
+    .trim()
     .min(1, { message: "Please enter an industry" })
     .max(MAX_CHAR_TEXT_INPUT, {
       message: `The text cannot have more than ${MAX_CHAR_TEXT_INPUT} characters.`,
-    })
-    .trim(),
+    }),
 });
 
 const idSchema = z.string().uuid({ message: "Please enter a valid id" });

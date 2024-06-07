@@ -38,12 +38,12 @@ const EditEntityForm = ({ entity }: { entity: Entity }) => {
       id: entity.id,
       name: entity.name,
       ...(entity.__typename === "Contact" && {
-        email: entity?.email ?? "",
-        phone: entity?.phone ?? "",
+        email: entity.email,
+        phone: entity.phone,
       }),
       ...(entity.__typename === "Company" && {
-        industry: entity.industry ?? "",
-        contactEmail: entity.contactEmail ?? "",
+        industry: entity.industry,
+        contactEmail: entity.contactEmail,
       }),
     },
   });
