@@ -1,3 +1,5 @@
+"use client";
+
 import { Form } from "./rhf/form";
 import { RHFRadioInput } from "./rhf/inputs/radio";
 import { RHFTextInput } from "./rhf/inputs/text";
@@ -68,7 +70,7 @@ export const EntityForm = <T extends CreateEntityData | UpdateEntityData>({ meth
           Submit
         </Button>
       </div>
-      {!!error && <Typography.error className="text-center">Something went wrong, please try again!</Typography.error>}
+      {!!error && <Typography.error className="text-center">{error}</Typography.error>}
     </Form>
   );
 };

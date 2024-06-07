@@ -74,7 +74,7 @@ const entities = Array.from({ length: casual.integer(150, 200) }, () => {
 //   }),
 // };
 
-// Option 2: Creating some basic resolvers to handle the queries and mutations and store the on the server ram
+// Option 2: Creating some basic resolvers to handle the queries and mutations logic and store the data on the server ram
 const resolvers = {
   Entity: {
     __resolveType(obj) {
@@ -93,7 +93,7 @@ const resolvers = {
       return entities;
     },
     getEntity: (_, { id }) => {
-      return entities.find((entity) => entity.id === id);
+      return entities.find((entity) => entity.id === id) ?? null;
     },
   },
   Mutation: {

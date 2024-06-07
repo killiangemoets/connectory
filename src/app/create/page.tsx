@@ -26,7 +26,7 @@ const CreateEntityForm = () => {
       router.push("/");
     },
     onError: (error) => {
-      console.error(error);
+      console.error(error.message);
     },
   });
   const methods = useForm<CreateEntityData>({

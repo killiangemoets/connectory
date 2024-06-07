@@ -8,7 +8,7 @@ export const Navbar = ({ className }: { className?: string }) => {
     <div className={cn("flex items-center gap-16 bg-primary w-full h-16 px-4 ", className)}>
       <Button variant="ghost" href="/">
         <ConnectoryLgo className="w-6 h-6 text-secondary mr-2" />
-        <h4 className="text-heading-4 text-medium text-secondary italic tracking-wide">Connectory</h4>
+        <Typography.h3 className="text-secondary italic tracking-wide">Connectory</Typography.h3>
       </Button>
     </div>
   );

@@ -71,13 +71,6 @@ const config = {
       fontFamily: {
         sans: ["Inter", ...fontFamily.sans],
       },
-      fontSize: {
-        "heading-1": ["40px", { lineHeight: "50px", fontWeight: "700" }],
-        "heading-2": ["33px", { lineHeight: "40px", fontWeight: "700" }],
-        "heading-3": ["27px", { lineHeight: "33px", fontWeight: "700" }],
-        "heading-4": ["23px", { lineHeight: "28px", fontWeight: "600" }],
-        "heading-5": ["19px", { lineHeight: "23px", fontWeight: "600" }],
-      },
     },
   },
   plugins: [require("tailwindcss-animate")],
