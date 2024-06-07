@@ -10,7 +10,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
     "typecheck": "tsc --noEmit",
-    "start:mock-server": "nodemon graphql-server/index.mjs",
+    "start:server": "nodemon graphql-server/index.mjs",
     "graphql:generate": "graphql-codegen"
   },
   "husky": {
