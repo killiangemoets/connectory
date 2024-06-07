@@ -103,8 +103,8 @@ const resolvers = {
         id: casual.uuid,
         name: input.name,
         ...(input.entityType === "CONTACT"
-          ? { email: input.email, phone: input.phone }
-          : { contactEmail: input.contactEmail, industry: input.industry }),
+          ? { email: input.email, phone: input?.phone ?? null }
+          : { contactEmail: input?.contactEmail ?? null, industry: input.industry }),
       };
       entities.push(newEntity);
     },
@@ -113,13 +113,13 @@ const resolvers = {
       if (!entity) {
         throw new Error("Entity not found");
       }
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { entityType, ...rest } = input;
+
       const updatedEntity = {
-        __typename: input.entityType === "CONTACT" ? "Contact" : "Company",
-        id: entity.id,
-        name: input.name,
-        ...(input.entityType === "CONTACT"
-          ? { email: input.email, phone: input.phone }
-          : { contactEmail: input.contactEmail, industry: input.industry }),
+        ...entity,
+        ...rest,
       };
 
       Object.assign(entity, updatedEntity);

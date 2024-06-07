@@ -86,30 +86,23 @@ const EntitiesGrid = ({ entities }: { entities: Entity[] }) => {
   });
 
   const handleNameValueChanged = (event: NewValueParams<Entity>) => {
-    const isValidName = !!event.data.name && event.data.name.trim().length > 0 && event.data.name.trim().length <= MAX_CHAR_TEXT_INPUT;
+    const newName = event.data.name?.trim();
+    const isValidNewName = !!newName && newName.length > 0 && newName.length <= MAX_CHAR_TEXT_INPUT;
 
     const updatedRowData: Entity[] = entities?.map((entity) => {
-      return entity?.id === event.data?.id ? { ...entity, name: isValidName ? event.data.name.trim() : entity.name } : entity;
+      return entity?.id === event.data?.id ? { ...entity, name: isValidNewName ? newName : entity.name } : entity;
     });
 
     setRowData(updatedRowData);
 
-    if (!isValidName) return;
+    if (!isValidNewName) return;
 
     updateEntityMutation({
       variables: {
         input: {
           id: event.data.id,
-          name: event.data.name.trim(),
+          name: newName,
           entityType: event.data?.__typename === "Contact" ? ENTITY_TYPES.CONTACT : ENTITY_TYPES.COMPANY,
-          ...(event.data?.__typename === "Contact" && {
-            email: event.data.email,
-            phone: event.data.phone,
-          }),
-          ...(event.data?.__typename === "Company" && {
-            industry: event.data.industry,
-            contactEmail: event.data.contactEmail,
-          }),
         },
       },
     });

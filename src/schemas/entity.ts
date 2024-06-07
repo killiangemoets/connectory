@@ -22,23 +22,26 @@ const createContactSchema = createEntityCommonSchema.extend({
     })
     .trim(),
   phone: z
-    .string({ message: "Please enter a phone number" })
-    .min(1, { message: "Please enter a phone number" })
+    .string()
     .max(MAX_CHAR_TEXT_INPUT, {
       message: `The text cannot have more than ${MAX_CHAR_TEXT_INPUT} characters.`,
     })
-    .trim(),
+    .trim()
+    .optional()
+    .nullable(),
 });
 const createCompanySchema = createEntityCommonSchema.extend({
   entityType: z.literal(ENTITY_TYPES.COMPANY, { message: "Please select an entity type" }),
   contactEmail: z
-    .string({ message: "Please enter an email address" })
-    .email({ message: "Please enter a valid email address" })
-    .min(1, { message: "Please enter an email address" })
+    .string()
     .max(MAX_CHAR_TEXT_INPUT, {
       message: `The text cannot have more than ${MAX_CHAR_TEXT_INPUT} characters.`,
     })
-    .trim(),
+    .email({ message: "Please enter a valid email address" })
+    .trim()
+    .or(z.literal(""))
+    .optional()
+    .nullable(),
   industry: z
     .string({ message: "Please enter an industry" })
     .min(1, { message: "Please enter an industry" })
