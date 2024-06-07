@@ -5,7 +5,7 @@ import { EntityForm } from "@/components/entity-form";
 import { CREATE_ENTITY, GET_ENTITIES } from "@/graphql/entities";
 import { createEntitySchema } from "@/schemas/entity";
 import type { CreateEntityData } from "@/types/entity";
-import type { CreateEntityMutation } from "@/utils/gql/graphql";
+import type { CreateEntityMutation } from "@/types/generated/graphql";
 import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -44,23 +44,8 @@ const CreateEntityForm = () => {
     });
   }
 
-  // const entityType = useWatch({
-  //   name: "entityType",
-  //   control: methods.control,
-  // });
-
-  // useEffect(() => {
-  //   if (entityType === ENTITY_TYPES.CONTACT) {
-  //     methods.setValue("contactEmail", methods.getValues("email"));
-  //     methods.setValue("industry", undefined);
-  //   } else if (entityType === ENTITY_TYPES.COMPANY) {
-  //     methods.setValue("email", methods.getValues("contactEmail"));
-  //     methods.setValue("phone", undefined);
-  //   }
-  // }, [entityType, methods]);
-
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-full">
       <EntityForm
         methods={methods}
         onSubmit={onSubmit}
@@ -73,7 +58,7 @@ const CreateEntityForm = () => {
 
 export default function Create() {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-full">
       <CreateEntityForm />
     </div>
   );

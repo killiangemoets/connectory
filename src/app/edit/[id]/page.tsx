@@ -1,11 +1,12 @@
 "use client";
 
 import { EntityForm } from "@/components/entity-form";
+import { Typography } from "@/components/typography";
 import { ENTITY_TYPES } from "@/constants/entity";
 import { GET_ENTITIES, GET_ENTITY_BY_ID, UPDATE_ENTITY } from "@/graphql/entities";
 import { updateEntitySchema } from "@/schemas/entity";
 import type { Entity, UpdateEntityData } from "@/types/entity";
-import type { GetEntityQuery, UpdateEntityMutation } from "@/utils/gql/graphql";
+import type { GetEntityQuery, UpdateEntityMutation } from "@/types/generated/graphql";
 import { useMutation, useQuery } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams, useRouter } from "next/navigation";
@@ -56,14 +57,12 @@ const EditEntityForm = ({ entity }: { entity: Entity }) => {
   }
 
   return (
-    <div className="flex justify-center">
-      <EntityForm
-        methods={methods}
-        onSubmit={onSubmit}
-        loading={loading}
-        error={!!error ? "Something went wrong, please try again!" : undefined}
-      />
-    </div>
+    <EntityForm
+      methods={methods}
+      onSubmit={onSubmit}
+      loading={loading}
+      error={!!error ? "Something went wrong, please try again!" : undefined}
+    />
   );
 };
 
@@ -77,14 +76,14 @@ export default function Edit() {
     variables: { id },
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <Typography.body className="text-center pt-24">Loading...</Typography.body>;
+  if (error) return <Typography.error className="text-center pt-24">Something went wrong, please try again!</Typography.error>;
 
   const entity = getEntityByIdQuery?.getEntity;
-  if (!entity) return <p>No entity found</p>;
+  if (!entity) return <Typography.body className="text-center pt-24">No entity found</Typography.body>;
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-full">
       <EditEntityForm entity={entity} />
     </div>
   );

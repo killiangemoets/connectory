@@ -1,59 +1,104 @@
+/* eslint-disable no-console */
 import { addMocksToSchema } from "@graphql-tools/mock";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { ApolloServer } from "apollo-server";
+import casual from "casual";
 import { readFileSync } from "fs";
 
 const typeDefs = readFileSync("./graphql-server/schema.graphql", "utf8");
 
-const schema = makeExecutableSchema({ typeDefs });
+const entities = Array.from({ length: casual.integer(150, 200) }, () => {
+  const type = casual.random_element(["Contact", "Company"]);
+  if (type === "Contact")
+    return {
+      __typename: type,
+      id: casual.uuid,
+      name: casual.full_name,
+      email: casual.email,
+      phone: casual.phone,
+    };
+  else
+    return {
+      __typename: type,
+      id: casual.uuid,
+      name: casual.company_name,
+      industry: casual.word,
+      contactEmail: casual.email,
+    };
+});
 
 const mocks = {
-  Query: () => ({
-    getEntities: () => [
-      {
-        __typename: "Contact",
-        id: "c7bd4646-edfb-4010-addd-185424632508",
-        name: "John Doe",
-        email: "john.doe@example.com",
-        phone: "555-1234",
-      },
-      {
-        __typename: "Company",
-        id: "3b6b2772-3146-4592-8526-8d4f0e2a92db",
-        name: "Acme Corp",
-        industry: "Technology",
-        contactEmail: "info@acmecorp.com",
-      },
-      {
-        __typename: "Contact",
-        id: "c7bd4646-edfb-4010-addd-185424632502",
-        name: "Killian Gemoets",
-        email: "killian@example.com",
-        phone: "+32123456",
-      },
-      {
-        __typename: "Company",
-        id: "3b6b2772-3146-4592-8526-8d4f0e2a92dc",
-        name: "Faceook",
-        industry: "Social Media",
-        contactEmail: "info@facebook.com",
-      },
-      {
-        __typename: "Company",
-        id: "3b6b2772-3146-4592-8526-8d4f0e2a92dz",
-        name: "Twitter",
-        industry: "Social Media",
-        contactEmail: "info@twitter.com",
-      },
-    ],
-  }),
+  // Query: () => ({
+  //   getEntities: () => {
+  //     return entities;
+  //   },
+  //   getEntity: ({ id }) => {
+  //     return entities.find((entity) => entity.id === id);
+  //   },
+  // }),
 };
 
-const schemaWithMocks = addMocksToSchema({ schema, mocks });
+const resolvers = {
+  Entity: {
+    __resolveType(obj) {
+      const type = obj.__typename || obj["$ref"].typeName;
+      if (type === "Contact") {
+        return "Contact";
+      }
+      if (type === "Company") {
+        return "Company";
+      }
+      return null;
+    },
+  },
+  Query: {
+    getEntities: () => {
+      return entities;
+    },
+    getEntity: (_, { id }) => {
+      return entities.find((entity) => entity.id === id);
+    },
+  },
+  Mutation: {
+    createEntity: (_, { input }) => {
+      const newEntity = {
+        __typename: input.entityType === "CONTACT" ? "Contact" : "Company",
+        id: casual.uuid,
+        name: input.name,
+        ...(input.entityType === "CONTACT"
+          ? { email: input.email, phone: input.phone }
+          : { contactEmail: input.contactEmail, industry: input.industry }),
+      };
+      entities.push(newEntity);
+    },
+    updateEntity: (_, { input }) => {
+      const entity = entities.find((entity) => entity.id === input.id);
+      if (!entity) {
+        throw new Error("Entity not found");
+      }
+      const updatedEntity = {
+        __typename: input.entityType === "CONTACT" ? "Contact" : "Company",
+        id: entity.id,
+        name: input.name,
+        ...(input.entityType === "CONTACT"
+          ? { email: input.email, phone: input.phone }
+          : { contactEmail: input.contactEmail, industry: input.industry }),
+      };
 
-const server = new ApolloServer({ schema: schemaWithMocks });
+      Object.assign(entity, updatedEntity);
+      return updatedEntity;
+    },
+  },
+};
+
+const server = new ApolloServer({
+  schema: addMocksToSchema({
+    schema: makeExecutableSchema({ typeDefs, resolvers }),
+    mocks,
+    preserveResolvers: true,
+  }),
+});
 
 server.listen().then(({ url }) => {
-  // eslint-disable-next-line no-console
   console.log(`🚀 Server ready at ${url}`);
 });

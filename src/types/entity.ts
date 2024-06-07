@@ -1,5 +1,5 @@
 import type { createEntitySchema, updateEntitySchema } from "@/schemas/entity";
-import type { Company, Contact } from "@/utils/gql/graphql";
+import type { Company, Contact } from "@/types/generated/graphql";
 import type { z } from "zod";
 
 export type CreateEntityData = z.infer<typeof createEntitySchema>;

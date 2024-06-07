@@ -4,5 +4,5 @@ documents:
   - "!utils/gql/**/*"
 overwrite: true
 generates:
-  "./src/utils/gql/graphql.ts":
+  "./src/types/generated/graphql.ts":
     plugins: ["typescript", "typescript-operations", "typescript-react-apollo"]

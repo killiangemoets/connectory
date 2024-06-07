@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/tailwind";
 import { Search } from "lucide-react";
 import * as React from "react";
 
@@ -23,7 +23,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, TextInputProps>(({ classN
   return (
     <div className="flex justify-center relative">
       <Search className="w-4 h-4 absolute top-[50%] left-2 -translate-y-1/2 text-muted-foreground" />
-      <TextInput placeholder={placeholder || "Search"} className={cn("pl-10", className)} {...props} ref={ref} />
+      <TextInput placeholder={placeholder || "Search"} className={cn("pl-10 flex-1", className)} {...props} ref={ref} />
     </div>
   );
 });
