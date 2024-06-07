@@ -5,7 +5,6 @@ export interface RHFInputProps {
   label?: string;
   description?: string;
   message?: string;
-  required?: boolean;
   rules?: RegisterOptions;
   hideError?: boolean;
 }

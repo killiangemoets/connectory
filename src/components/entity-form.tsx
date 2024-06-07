@@ -22,9 +22,15 @@ export const EntityForm = <T extends CreateEntityData | UpdateEntityData>({ meth
     control: methods.control,
   });
 
+  const id = useWatch<T>({
+    name: "id" as Path<T>,
+    control: methods.control,
+  });
+
   return (
     <Form className="flex flex-col gap-6 w-full max-w-96" methods={methods} onSubmit={onSubmit}>
       <RHFRadioInput
+        readOnly={!!id}
         hideError
         className="flex space-x-4"
         required

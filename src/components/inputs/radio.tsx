@@ -1,9 +1,10 @@
 "use client";
 
+import { Typography } from "../typography";
 import { cn } from "@/utils/tailwind";
 import { Label } from "@radix-ui/react-label";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { Circle } from "lucide-react";
+import { ArrowRight, Circle } from "lucide-react";
 import * as React from "react";
 
 const Root = React.forwardRef<
@@ -53,13 +54,24 @@ export type MultiOption<T extends string> = { value: T; label: string };
 export type RadioInputProps<TValue extends string> = RadioGroupProps<TValue> & {
   items: MultiOption<TValue>[];
   className?: string;
+  readOnly?: boolean;
 };
 
-export const RadioInput = <T extends string>({ items, ...props }: RadioInputProps<T>) => {
+export const RadioInput = <T extends string>({ items, readOnly = false, ...props }: RadioInputProps<T>) => {
+  if (readOnly) {
+    const label = items.find((item) => item.value === props.value)?.label;
+    return (
+      <div className="flex items-center gap-2">
+        <ArrowRight className="h-4 w-4" />
+        <Typography.body>{label}</Typography.body>
+      </div>
+    );
+  }
+
   return (
     <RadioGroup.Root {...props}>
-      {items.map((radioItem) => {
-        return <RadioGroup.Item label={radioItem.label} key={radioItem.value} value={radioItem.value} />;
+      {items.map((item) => {
+        return <RadioGroup.Item label={item.label} key={item.value} value={item.value} />;
       })}
     </RadioGroup.Root>
   );

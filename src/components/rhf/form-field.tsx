@@ -13,7 +13,6 @@ type FormFieldContextValue<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = {
   name: TName;
-  required?: boolean;
   hideError?: boolean;
 };
 
@@ -24,7 +23,7 @@ const Root = <TFieldValues extends FieldValues = FieldValues, TName extends Fiel
   ...props
 }: ControllerProps<TFieldValues, TName> & { hideError?: boolean }) => {
   return (
-    <FormFieldContextProvider value={{ name: props.name, required: !!props?.rules?.required, hideError }}>
+    <FormFieldContextProvider value={{ name: props.name, hideError }}>
       <Controller {...props} />
     </FormFieldContextProvider>
   );
@@ -46,7 +45,6 @@ const useFormField = () => {
   return {
     id,
     name: fieldContext.name,
-    required: fieldContext.required,
     formItemId: `${id}-form-item`,
     formDescriptionId: `${id}-form-item-description`,
     formMessageId: `${id}-form-item-message`,
@@ -74,16 +72,9 @@ Item.displayName = "FormItem";
 
 const Label = React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>, React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>>(
   ({ className, ...props }, ref) => {
-    const { error, formItemId, required } = useFormField();
+    const { error, formItemId } = useFormField();
 
-    return (
-      <LabelComponent
-        ref={ref}
-        className={cn(!!error && "text-destructive", required && "after:text-destructive after:content-['_*']", className)}
-        htmlFor={formItemId}
-        {...props}
-      />
-    );
+    return <LabelComponent ref={ref} className={cn(!!error && "text-destructive", className)} htmlFor={formItemId} {...props} />;
   }
 );
 Label.displayName = "FormLabel";

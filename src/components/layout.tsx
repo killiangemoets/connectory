@@ -1,12 +1,14 @@
 import { Typography } from "./typography";
 import { Button } from "./ui/button";
+import { ConnectoryLgo } from "@/assets/connectory_logo";
 import { cn } from "@/utils/tailwind";
 
 export const Navbar = ({ className }: { className?: string }) => {
   return (
     <div className={cn("flex items-center gap-16 bg-primary w-full h-16 px-4 ", className)}>
       <Button variant="ghost" href="/">
-        <h4 className="text-heading-4 text-secondary italic tracking-wide">Connectory</h4>
+        <ConnectoryLgo className="w-6 h-6 text-secondary mr-2" />
+        <h4 className="text-heading-4 text-medium text-secondary italic tracking-wide">Connectory</h4>
       </Button>
     </div>
   );
