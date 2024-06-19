@@ -11,7 +11,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 export const AgGrid = <
   TData extends {
-    [key: string]: any;
+    [key: string]: unknown;
   }
 >({
   data,

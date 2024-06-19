@@ -32,7 +32,7 @@ const entities = Array.from({ length: casual.integer(150, 200) }, () => {
 //   Query: () => ({
 //     getEntities: () => {
 //       console.log("MOCK - getEntities");
-//       return [];
+//       return entities;
 //     },
 //     getEntity: ({ id }) => {
 //       console.log("MOCK - getEntity", id);
@@ -114,11 +114,11 @@ const resolvers = {
         throw new Error("Entity not found");
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { entityType, ...rest } = input;
 
       const updatedEntity = {
         ...entity,
+        __typename: entityType === "CONTACT" ? "Contact" : "Company",
         ...rest,
       };
 

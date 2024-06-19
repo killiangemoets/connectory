@@ -10,7 +10,7 @@
     "react/react-in-jsx-scope": 0,
     "react/jsx-uses-react": 0,
     "lodash/prefer-constant": 0,
-    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-explicit-any": 1,
     "no-extra-boolean-cast": 0,
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "@typescript-eslint/consistent-type-imports": "error",
