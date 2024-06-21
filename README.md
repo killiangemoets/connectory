@@ -1,7 +1,7 @@
 ## Description
 
 Connectory is a small application that stores contact information for companies and people you might meet.
-It is built with Next.js and uses a GraphQL mock server using Apollo Server.
+It is built with Next.js and the App Router, and uses a GraphQL mock server using Apollo Server.
 
 ## Getting Started
 
